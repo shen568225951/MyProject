@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fh.mapper.CarMapper">
+    
+    <sql id="sqlWhere">
+        <where>
+            <if test="queryName != null and queryName != ''">
+                and carName like concat('%',#{queryName},'%')
+            </if>
+
+            <if test="queryBrandId != null">
+                and tb.id = #{queryBrandId}
+            </if>
+
+            <if test="queryIsup != null">
+                and isup = #{queryIsup}
+            </if>
+
+            <if test="queryConfigure != null and queryConfigure != ''">
+                <foreach collection="configureList" item="configure">
+                    and configure like concat("%",#{configure},"%")
+                </foreach>
+            </if>
+
+            <if test="minPrice != null">
+                and carPrice &gt;= #{minPrice}
+            </if>
+            <if test="maxPrice != null">
+                and carPrice &lt;= #{maxPrice}
+            </if>
+
+            <if test="minTime != null">
+                and producedDate &gt;= #{minTime}
+            </if>
+            <if test="maxTime != null">
+                and producedDate &lt;= #{maxTime}
+            </if>
+
+        </where>
+    </sql>
+    <!--两表联查汽车信息-->
+    <select id="selectCarList" parameterType="com.fh.bean.QueryCar" resultType="com.fh.bean.vo.CarVo">
+        select
+        tc.id,tc.carName,tc.carPrice,tc.isup,tc.configure,tc.brandId,tc.introduction,tc.producedDate,tb.brandName
+        from t_car tc
+        left join t_brand tb
+        on tc.brandId = tb.id
+        <include refid="sqlWhere"/>
+        order by tc.id desc
+    </select>
+    <!--批量删除汽车信息-->
+    <delete id="deleteAll" parameterType="java.lang.String">
+        delete from t_car
+        where id in
+        <foreach collection="array" item="ids" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
+
+
+
+</mapper>
