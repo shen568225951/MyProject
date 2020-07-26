@@ -1,0 +1,15 @@
+server:
+  port: 6001
+
+#进行Eureka Server的配置
+eureka:
+  instance:
+    hostname: eureka.server6001 #Eureka Server实例的主机名
+  client:
+    #这块设成false表明不向Eureka注册中心注册自己
+    register-with-eureka: false
+    #这块设成false是表名就是Eureka服务器
+    fetch-registry: false
+    #Eureka客户端想要向EurekaServer查询服务和注册服务都需要依赖于这个地址
+    service-url:
+      defaultZone: http://eureka.server6002:6002/eureka/,http://eureka.server6003:6003/eureka/

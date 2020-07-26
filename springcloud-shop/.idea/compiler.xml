@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="shop-provider-user-api" />
+        <module name="shop-consumer-ribbon" />
+        <module name="shop-provider-user" />
+        <module name="shop-provider-orderInfo" />
+        <module name="shop-provider-product" />
+        <module name="shop-provider-userWallet-api" />
+        <module name="shop-provider-order-api" />
+        <module name="shop-provider-product-api" />
+        <module name="shop-provider-userWallet" />
+        <module name="shop-eureka-server03" />
+        <module name="shop-provider-order" />
+        <module name="shop-provider-cart" />
+        <module name="shop-eureka-server" />
+        <module name="shop-common" />
+        <module name="shop-provider-orderInfo-api" />
+        <module name="shop-eureka-server02" />
+        <module name="shop-provider-wxPay" />
+        <module name="shop-provider-cart-api" />
+      </profile>
+    </annotationProcessing>
+  </component>
+</project>

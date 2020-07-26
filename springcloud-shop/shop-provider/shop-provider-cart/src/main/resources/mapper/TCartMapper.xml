@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fh.mapper.TCartMapper">
+
+  <resultMap id="BaseResultMap" type="com.fh.model.TCart">
+    <id column="tc_id" jdbcType="BIGINT" property="tcId" />
+    <result column="cart_id" jdbcType="BIGINT" property="cartId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="pid" jdbcType="BIGINT" property="pid" />
+    <result column="pcount" jdbcType="BIGINT" property="pcount" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    tc_id, cart_id, user_id, pid, pcount
+  </sql>
+
+  <!--CartVo 字段-->
+  <resultMap id="CartVoResultMap" type="com.fh.model.vo.CartVo">
+
+    <result column="cart_id" jdbcType="BIGINT" property="cartId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="pid" jdbcType="BIGINT" property="pid" />
+    <result column="pcount" jdbcType="BIGINT" property="pcount" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="pimg" jdbcType="VARCHAR" property="pimg" />
+  </resultMap>
+
+  <sql id="Base_Column_List2">
+    cart_id, user_id, pid, pcount,pname,price
+  </sql>
+
+
+  <!--根据用户ID查询用户购物车的所有信息-->
+  <select id="selectCartByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+
+    select
+    <include refid="Base_Column_List" />
+    from t_cart
+    where user_id = #{userId,jdbcType=BIGINT}
+
+  </select>
+
+  <!--根据用户ID查询更新过后的购物车的信息-->
+  <select id="selectCartVoByUserId" parameterType="java.lang.Long" resultMap="CartVoResultMap">
+     SELECT
+        tp.pid,
+        tc.user_id,
+        tc.pcount,
+        tp.pname,
+        tp.pimg,
+        tp.price
+     FROM
+        t_cart tc
+        JOIN t_product tp ON tc.pid = tp.pid
+  </select>
+
+
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_cart
+    where tc_id = #{tcId,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_cart
+    where tc_id = #{tcId,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert" parameterType="com.fh.model.TCart">
+    insert into t_cart ( cart_id, user_id,
+      pid, pcount)
+    values ( #{cartId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT},
+      #{pid,jdbcType=BIGINT}, #{pcount,jdbcType=BIGINT})
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.fh.model.TCart">
+    insert into t_cart
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tcId != null">
+        tc_id,
+      </if>
+      <if test="cartId != null">
+        cart_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="pcount != null">
+        pcount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tcId != null">
+        #{tcId,jdbcType=BIGINT},
+      </if>
+      <if test="cartId != null">
+        #{cartId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="pid != null">
+        #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="pcount != null">
+        #{pcount,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.fh.model.TCart">
+    update t_cart
+    <set>
+      <if test="cartId != null">
+        cart_id = #{cartId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="pid != null">
+        pid = #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="pcount != null">
+        pcount = #{pcount,jdbcType=BIGINT},
+      </if>
+    </set>
+    where tc_id = #{tcId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.fh.model.TCart">
+    update t_cart
+    set cart_id = #{cartId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      pid = #{pid,jdbcType=BIGINT},
+      pcount = #{pcount,jdbcType=BIGINT}
+    where tc_id = #{tcId,jdbcType=BIGINT}
+  </update>
+
+</mapper>

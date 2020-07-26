@@ -1,0 +1,68 @@
+spring:
+  datasource:
+    #jdbc驱动
+    driverClassName: com.mysql.jdbc.Driver
+    #数据库
+    url: jdbc:mysql://localhost:3306/test2?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
+    #用户名
+    username: root
+    #密码
+    password: root
+  application:
+    name: shop-provider-orderInfo
+
+server:
+  #端口号设置
+  port: 5004
+
+#pagehelper分页插件配置
+pagehelper:
+  helper-dialect: mysql
+  #为true时，当前页大于总页数时，会返回最后一页，为false时，有数据就返回，没数据则为空
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+
+mybatis-plus:
+  #xml扫描，多个目录用逗号或者分号分隔（告诉 Mapper 所对应的 XML 文件位置）
+  mapper-locations: classpath:/mapper/**Mapper.xml
+  #MyBaits 别名包扫描路径，通过该属性可以给包中的类注册别名
+  type-aliases-package: com.fh.model
+  #项目启动会检查xml配置存在(只在开发时候打开)
+  check-config-location: true
+  configuration:
+    # 是否开启自动驼峰命名规则（camel case）映射，即从经典数据库列名 A_COLUMN（下划线命名） 到经典 Java 属性名 aColumn（驼峰命名） 的类似映射
+    map-underscore-to-camel-case: false
+    # 全局地开启或关闭配置文件中的所有映射器已经配置的任何缓存，默认为 true
+    cache-enabled: false
+    #懒加载
+    #aggressive-lazy-loading: true
+    #NONE：不启用自动映射 PARTIAL：只对非嵌套的 resultMap 进行自动映射 FULL：对所有的 resultMap 都进行自动映射
+    #auto-mapping-behavior: partial
+    #NONE：不做任何处理 (默认值)WARNING：以日志的形式打印相关警告信息 FAILING：当作映射失败处理，并抛出异常和详细信息
+    #auto-mapping-unknown-column-behavior: none
+    #如果查询结果中包含空值的列，则 MyBatis 在映射的时候，不会映射这个字段
+    #call-setters-on-nulls: true
+    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      #表名下划线命名默认true
+      table-underline: true
+      #主键生成策略  id类型
+      id-type: auto
+      #是否开启大写命名，默认不开启
+      #capital-mode: false
+      #数据库类型
+      db-type: MySQL
+      #表前缀
+      table-prefix: t_
+
+#将Eureka客户端注册到Eureka服务端
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:6001/eureka   #EurekaServer提供的交互地址
+  instance:
+    instance-id: shop-provider-orderInfo
+    prefer-ip-address: true     #访问路径可以显示IP地址
