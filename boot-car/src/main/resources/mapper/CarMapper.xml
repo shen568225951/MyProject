@@ -4,38 +4,38 @@
     
     <sql id="sqlWhere">
         <where>
+            /*名字查询*/
             <if test="queryName != null and queryName != ''">
                 and carName like concat('%',#{queryName},'%')
             </if>
-
+            /*品牌查询*/
             <if test="queryBrandId != null">
                 and tb.id = #{queryBrandId}
             </if>
-
+            /*单选查询*/
             <if test="queryIsup != null">
                 and isup = #{queryIsup}
             </if>
-
+            /*复选查询*/
             <if test="queryConfigure != null and queryConfigure != ''">
                 <foreach collection="configureList" item="configure">
                     and configure like concat("%",#{configure},"%")
                 </foreach>
             </if>
-
+            /*价格区间查询*/
             <if test="minPrice != null">
                 and carPrice &gt;= #{minPrice}
             </if>
             <if test="maxPrice != null">
                 and carPrice &lt;= #{maxPrice}
             </if>
-
+            /*时间区间查询*/
             <if test="minTime != null">
                 and producedDate &gt;= #{minTime}
             </if>
             <if test="maxTime != null">
                 and producedDate &lt;= #{maxTime}
             </if>
-
         </where>
     </sql>
     <!--两表联查汽车信息-->
@@ -56,7 +56,5 @@
             #{ids}
         </foreach>
     </delete>
-
-
 
 </mapper>

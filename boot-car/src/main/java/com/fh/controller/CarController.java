@@ -24,6 +24,12 @@ public class CarController {
     @Autowired
     private CarService service;
 
+    /**
+     * 分页+条件查询
+     * 查询所有汽车信息
+     * @param queryCar
+     * @return
+     */
     @RequestMapping("selectCarList")
     public PageInfo<CarVo> selectCarList(QueryCar queryCar){
         PageHelper.startPage(queryCar.getPage(),queryCar.getLimit());
@@ -35,26 +41,47 @@ public class CarController {
         return pageInfo;
     }
 
+    /**
+     * 新增汽车信息
+     * @param car
+     */
     @RequestMapping("addCar")
     public void addCar(Car car){
         service.addCar(car);
     }
 
+    /**
+     * 根据Id查询汽车单条数据
+     * @param id
+     * @return
+     */
     @RequestMapping("getCarById")
     public Car getCarById(Long id){
         return service.getCarById(id);
     }
 
+    /**
+     * 修改汽车信息
+     * @param car
+     */
     @RequestMapping("updateCar")
     public void updateCar(Car car){
         service.updateCar(car);
     }
 
+    /**
+     * 删除汽车信息
+     * @param id
+     */
     @RequestMapping("deleteCar")
     public void deleteCar(Long id){
         service.deleteCar(id);
     }
 
+    /**
+     *批量删除汽车信息
+     * @param ids
+     */
     @RequestMapping("deleteAll")
     public void deleteAll(String ids){
         service.deleteAll(ids);

@@ -20,6 +20,10 @@ public class BrandController {
     @Autowired
     private BrandService service;
 
+    /**
+     * 查询所有品牌信息
+     * @return
+     */
     @RequestMapping("selectBrandList")
     public List<Brand> selectBrandList(){
         return service.selectBrandList();
